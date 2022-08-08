@@ -15,7 +15,12 @@ class JetstreamServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        $this->registerComponent('textarea');
+        $this->registerComponent('select');
+    }
+    
+    protected function registerComponent(string $component) {
+        \Illuminate\Support\Facades\Blade::component('jetstream::components.'.$component, 'jet-'.$component);
     }
 
     /**

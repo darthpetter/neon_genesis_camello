@@ -14,9 +14,13 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('landingpage.index');
 });
 
+
+Route::get('/completar_formulario',function(){
+    return view('perfil_rrss.index');
+});
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),

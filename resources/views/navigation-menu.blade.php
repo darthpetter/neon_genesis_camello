@@ -15,6 +15,24 @@
                     <x-jet-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-jet-nav-link>
+                    <x-jet-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
+                        <div class="grid grid-rows-2 gap-y-1 justify-items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 41 40">
+                                <path fill="currentColor" d="m31.928 20-6.571-2 3.286-6.143-6.143 3.286-2-6.572-2 6.572-6.143-3.286L15.643 18 9.07 20l6.572 2-3.286 6.143 6.143-3.286 2 6.572 2-6.572 6.143 3.286L25.357 22l6.571-2Z"/>
+                                <path fill="currentColor" d="M20.5 40a20 20 0 1 1 20-20 20.023 20.023 0 0 1-20 20Zm0-37.143A17.143 17.143 0 1 0 37.643 20 17.163 17.163 0 0 0 20.5 2.857Z"/>
+                            </svg>
+                            <span>{{ __('Explorar') }}</span>
+                        </div>
+                    </x-jet-nav-link>
+                    <x-jet-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
+                        <div class="grid grid-rows-2 gap-y-1 justify-items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 41 40">
+                                <path fill="currentColor" d="M20.5 0C9.46 0 .5 8.96.5 20s8.96 20 20 20 20-8.96 20-20-8.96-20-20-20Zm0 36c-8.82 0-16-7.18-16-16s7.18-16 16-16 16 7.18 16 16-7.18 16-16 16Z"/>
+                                <path fill="currentColor" d="M12.5 28a4 4 0 1 0 0-8 4 4 0 0 0 0 8Zm8-12a4 4 0 1 0 0-8 4 4 0 0 0 0 8Zm8 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z"/>
+                              </svg>
+                            <span>{{ __('Postulaciones') }}</span>
+                        </div>
+                    </x-jet-nav-link>
                 </div>
             </div>
 
