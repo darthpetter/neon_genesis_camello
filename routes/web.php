@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Auth\AuthController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,16 +18,33 @@ Route::get('/', function () {
     return view('landingpage.index');
 });
 
-
-Route::get('/completar_formulario',function(){
-    return view('perfil_rrss.index');
+Route::controller(AuthController::class)->group(function () {
+    Route::post('/login', 'login');
+    Route::post('/register', ['uses'=>'registro','as'=>'registro']);
 });
+
+
+
+Route::get('/perfil',function(){
+    return view('perfil_mostrar.perfil');
+});
+Route::get('/explore',function(){
+    return view('postulaciones.explore_postulaciones');
+});
+
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
     'verified'
-])->group(function () {
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    })->name('dashboard');
+    ])->group(function () {
+
+        Route::get('/dashboard', function () {
+            return view('dashboard');
+        })->name('dashboard');
+
+        Route::get('/completar_formulario',['as'=>'completar_formulario'],function(){
+            return view('perfil_rrss.index');
+        });
+        
+
 });

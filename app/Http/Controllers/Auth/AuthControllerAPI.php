@@ -38,7 +38,13 @@ class AuthController extends Controller
         $socialmedia=SocialMediaProfile::create([]);
         $perfil->socialmedia()->associate($socialmedia)->save();
 
-        return redirect()->route('completar_formulario');
+        $token= $user->createToken('auth_token')->plainTextToken;
+
+        return response()->json([
+            'access_token'=>$token,
+            'token_type'=>'Bearer',
+            'status'=>200
+        ],200);
     }
 
     public function login(Request $request){
