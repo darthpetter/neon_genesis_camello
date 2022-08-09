@@ -8,21 +8,27 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use App\Models\Afiliacion\Perfil;
 use App\Models\Nucleo\TipoIdentificacion;
+use App\Models\Nucleo\Sexo;
 
 use Illuminate\Support\Facades\Log;
 
 class PerfilController extends Controller
 {
+
+    public function index(){
+        $tipos_id=TipoIdentificacion::all();
+        $sexos=Sexo::all();
+
+
+
+        return view('perfil_rrss.index',compact('tipos_id','sexos'));
+    }
+
     public function store(Request $request){
+        
         $perfil=Perfil::find(auth()->user()->id);
 
-        $validator = $this->validation($request,$perfil);
-        if($validator->fails()){
-            return response()->json([
-                'errorList'=>$validator->errors(),
-                'status'=>401,
-            ],200);
-        }
+        $this->validation($request,$perfil->identificacion);
 
         $perfil->update($request->only(
             'id_tipo_identificacion','identificacion','fecha_nacimiento',
@@ -45,7 +51,7 @@ class PerfilController extends Controller
         ],200);
     }
 
-    protected function validation(Request $request,Perfil $perfil){
+    protected function validation(Request $request,$identificacion){
         $regla_identificacion='';
         if($request->id_tipo_identificacion!==0 && $request->id_tipo_identificacion!==NULL){
             $tipo_identificacion=TipoIdentificacion::where('id',$request->id_tipo_identificacion)->first();
@@ -61,7 +67,7 @@ class PerfilController extends Controller
             'id_tipo_identificacion'=>'required|exists:tbr_tipos_identificacion,id',
             'identificacion'=>[
                 $regla_identificacion,
-                Rule::unique('tbm_perfiles')->ignore($perfil->identificacion,'identificacion'),
+                Rule::unique('tbm_perfiles')->ignore($identificacion,'identificacion'),
             ],
             'nombres'=>'required|max:50',
             'apellidos'=>'required|max:50',

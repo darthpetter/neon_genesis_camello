@@ -17,14 +17,12 @@ use Illuminate\Support\Facades\Auth;
 class AuthController extends Controller
 {
     public function registro(Request $request){
-        $validator=$this->validator($request);
-
-        if($validator->fails()){            
-            return response()->json([
-                'messages'=>$validator->errors(),
-                'status'=>400
-            ],200);
-        }
+        $request->validate([
+            'name'=>'required|string|max:255',
+            'email'=>'required|string|email|max:255|unique:users',
+            'password'=>'required|string|min:8',
+            'id_rol'=>'required|exists:tbr_roles,id'
+        ]);
 
         $user=User::factory()->create([
             'name'=>$request->name,
@@ -37,7 +35,7 @@ class AuthController extends Controller
 
         $socialmedia=SocialMediaProfile::create([]);
         $perfil->socialmedia()->associate($socialmedia)->save();
-
+        Auth::login($user);
         return redirect()->route('completar_formulario');
     }
 

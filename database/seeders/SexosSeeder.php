@@ -14,7 +14,7 @@ class SexosSeeder extends Seeder
      */
     public function run()
     {
-        Sexo::create(['name'=>'femenino']);
-        Sexo::create(['name'=>'masculino']);
+        Sexo::create(['name'=>'FEMENINO']);
+        Sexo::create(['name'=>'MASCULINO']);
     }
 }

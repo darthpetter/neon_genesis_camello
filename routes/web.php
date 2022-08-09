@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Afiliacion\PerfilController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\AuthController;
 
@@ -41,10 +42,10 @@ Route::middleware([
         Route::get('/dashboard', function () {
             return view('dashboard');
         })->name('dashboard');
-
-        Route::get('/completar_formulario',['as'=>'completar_formulario'],function(){
-            return view('perfil_rrss.index');
-        });
         
+        Route::controller(PerfilController::class)->group(function(){
+            Route::get('/completar_formulario','index')->name('completar_formulario');
+            Route::post('/perfil_store','store')->name('perfil.store');
+        });
 
 });
