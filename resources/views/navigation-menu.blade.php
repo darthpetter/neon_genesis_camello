@@ -24,7 +24,7 @@
                             <span>{{ __('Explorar') }}</span>
                         </div>
                     </x-jet-nav-link>
-                    <x-jet-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
+                    <x-jet-nav-link href="{{ route('postulaciones') }}" :active="request()->routeIs('postulaciones')">
                         <div class="grid grid-rows-2 gap-y-1 justify-items-center">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 41 40">
                                 <path fill="currentColor" d="M20.5 0C9.46 0 .5 8.96.5 20s8.96 20 20 20 20-8.96 20-20-8.96-20-20-20Zm0 36c-8.82 0-16-7.18-16-16s7.18-16 16-16 16 7.18 16 16-7.18 16-16 16Z"/>

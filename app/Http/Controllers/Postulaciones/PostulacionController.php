@@ -16,10 +16,7 @@ class PostulacionController extends Controller
         $postulaciones=Postulacion::where('id_usuario_creador',auth()->user()->id)
         ->where('estado','!=','E')->get();
 
-        return response()->json([
-            'postulaciones'=>$postulaciones,
-            'status'=>200
-        ]);
+        return view('cliente.postulaciones.index',$postulaciones);
     }
 
     public function index(){

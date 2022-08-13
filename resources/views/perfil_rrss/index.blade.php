@@ -3,7 +3,7 @@
         <div class="bg-white rounded-md px-5 md:px-10 py-5 shadow-lg">
             <div class="grid grid-cols-1 gap-6">
                 @include('perfil_rrss.secciones.perfil')
-                @include('perfil_rrss.secciones.redes_sociales')
+                <!--@include('perfil_rrss.secciones.redes_sociales')-->
             </div>
         </div>
     </div>

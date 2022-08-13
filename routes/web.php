@@ -1,8 +1,10 @@
 <?php
 
 use App\Http\Controllers\Afiliacion\PerfilController;
+use App\Http\Controllers\Afiliacion\SocialMediaController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\Postulaciones\PostulacionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,13 +28,11 @@ Route::controller(AuthController::class)->group(function () {
 
 
 
-Route::get('/perfil',function(){
-    return view('perfil_mostrar.perfil');
-});
+
 Route::get('/explore',function(){
     return view('postulaciones.explore_postulaciones');
 });
-
+//Mayores de edad
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
@@ -46,6 +46,15 @@ Route::middleware([
         Route::controller(PerfilController::class)->group(function(){
             Route::get('/completar_formulario','index')->name('completar_formulario');
             Route::post('/perfil_store','store')->name('perfil.store');
+            Route::get('/perfil','getPerfil')->name('perfil');
+        });
+        Route::controller(SocialMediaController::class)->group(function(){
+            Route::post('/rrss_store','store')->name('rrss.store');
+        });
+
+        Route::controller(PostulacionController::class)->group(function (){
+            Route::get('/postulaciones','getByUserCreator')->name('postulaciones');
+            Route::delete('/eliminar_postulacion','eliminarPostulacion')->name('postulacion.eliminar');
         });
 
 });
