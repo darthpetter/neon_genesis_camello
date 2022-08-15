@@ -4,34 +4,96 @@
 <x-app-layout>
     <div class="min-w-screen min-h-screen bg-guayaquil-600 dark:bg-neutral-800 p-5 md:p-10">
         <div class="grid grid-cols-1 md:gap-4 gap-2 px-10">
+            <span>
+                <button type="button" onclick="showModal()" class="p-2 rounded-md bg-guayaquil-500">CREAR</button>
+            </span>
 
-            <div class="grid grid-cols-3 bg-white rounded-md p-5 relative">
-                <div class="absolute top-0 right-0">
-                    <div class="ml-3 relative">
-                        <x-jet-dropdown align="right" width="60">
-                            <x-slot name="trigger">
-                                <span class="inline-flex rounded-md">
-                                    <button type="button" class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:bg-gray-50 hover:text-gray-700 focus:outline-none focus:bg-gray-50 active:bg-gray-50 transition">
-                                        <svg class="ml-2 -mr-0.5 h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-                                            <path fill-rule="evenodd" d="M10 3a1 1 0 01.707.293l3 3a1 1 0 01-1.414 1.414L10 5.414 7.707 7.707a1 1 0 01-1.414-1.414l3-3A1 1 0 0110 3zm-3.707 9.293a1 1 0 011.414 0L10 14.586l2.293-2.293a1 1 0 011.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clip-rule="evenodd" />
-                                        </svg>
-                                    </button>
-                                </span>
-                            </x-slot>
-    
-                            <x-slot name="content">
-                                <div class="w-40">
-
-                                </div>
-                            </x-slot>
-                        </x-jet-dropdown>
-                    </div>
+            @foreach ($postulaciones as $postulacion )                
+                <div class="grid grid-cols-1 bg-white rounded-md p-5 relative">
+                    <span class="header-title text-xl text-neutral-800">{{ __($postulacion->titulo) }}</span>
+                    <span class="font-mono font-light text-neutral-600">
+                        {{ __($postulacion->descripcion) }}
+                    </span>
                 </div>
-                <span class="header-title text-xl text-neutral-800">Se busca una persona que sepa amar</span>
-                <span class="font-mono font-light text-neutral-600">
-                    se busca persona que tenga experiencia en el area del no se que y no se cuanto.
-                </span>
-            </div>
+            @endforeach
 
-    </div>
+        </div>
+
+        <div id="modal" class="hidden">
+            <div class="z-99 absolute top-0 right-0 bottom-0 left-0 min-w-full min-h-full bg-black bg-opacity-25 flex items-center justify-center"> 
+                <div class="bg-guayaquil-100 rounded-md p-10 w-1/2 shadow-lg">
+                    <form id="crearPostulacion">
+                        <div class="grid grid-cols-1 gap-3">
+                            <div>
+                                <x-jet-label value="Titulo"/>
+                                <x-jet-input onchange="handleInput(event)" class="w-full" name="titulo" id="titulo"  type="text"/>
+                                <span id="error_titulo" name="error_titulo" class="text-danger-500"></span>
+                            </div>
+                            <div>
+                                <x-jet-label value="Descripción"/>
+                                <x-jet-textarea onchange="handleInput(event)" class="w-full" placeholder="Descripcion" name="descripcion" id="descripcion"/>
+                                <span id="error_descripcion" name="error_descripcion" class="text-danger-500"></span>
+                            </div>
+                            <div>
+                                <x-jet-button type="button" onclick="guardar()">{{ __('Guardar') }}</x-jet-button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>    
 </x-app-layout>
+
+<script>
+    function showModal()
+    {
+        const modal=document.getElementById('modal')
+        modal.classList.toggle('hidden')
+    }
+
+    async function guardar()
+    {
+        const titulo=document.getElementById('titulo');
+        const descripcion=document.getElementById('descripcion');
+        const request={
+            titulo:titulo.value,
+            descripcion:descripcion.value,
+        }
+
+        await peticionGuardar(request)
+            .then(response=>{
+                console.log("🚀 ~ file: index.blade.php ~ line 69 ~ data", response)
+                if(response.status==401){
+                    document.getElementById('error_titulo').innerHTML=response.error.titulo ? response.error.titulo : ''
+                    document.getElementById('error_descripcion').innerHTML=response.error.descripcion ? response.error.descripcion : ''
+                }
+            });
+    }
+
+    function peticionGuardar(request)
+    {
+        const reqOption={
+            method: "POST",
+            headers:{
+                'X-CSRF-TOKEN':document.querySelector('meta[name="csrf-token"]').content
+            },
+            body:JSON.stringify(request),
+        }
+
+        return fetch('/postulacion',reqOption).
+            then(response=>{
+                console.log("🚀 ~ file: index.blade.php ~ line 91 ~ response", response)
+                return response.json()
+            }).catch(error=>{
+                console.log("🚀 ~ file: index.blade.php ~ line 94 ~ error", error)
+                return error
+            });
+    }
+
+    function handleInput(event)
+    {
+        document.getElementById('error_titulo').innerHTML=''
+        document.getElementById('error_descripcion').innerHTML=''
+    }
+</script>

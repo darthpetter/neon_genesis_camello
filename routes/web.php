@@ -22,7 +22,7 @@ Route::get('/', function () {
 });
 
 Route::controller(AuthController::class)->group(function () {
-    Route::post('/login', 'login');
+    //Route::post('/login', 'login');
     Route::post('/register', ['uses'=>'registro','as'=>'registro']);
 });
 
@@ -54,6 +54,7 @@ Route::middleware([
 
         Route::controller(PostulacionController::class)->group(function (){
             Route::get('/postulaciones','getByUserCreator')->name('postulaciones');
+            Route::post('/postulacion','store')->name('postulacion.create');
             Route::delete('/eliminar_postulacion','eliminarPostulacion')->name('postulacion.eliminar');
         });
 

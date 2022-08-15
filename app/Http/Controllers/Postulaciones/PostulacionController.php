@@ -16,7 +16,7 @@ class PostulacionController extends Controller
         $postulaciones=Postulacion::where('id_usuario_creador',auth()->user()->id)
         ->where('estado','!=','E')->get();
 
-        return view('cliente.postulaciones.index',$postulaciones);
+        return view('cliente.postulaciones.index',compact('postulaciones'));
     }
 
     public function index(){
@@ -31,6 +31,7 @@ class PostulacionController extends Controller
     
     public function store(Request $request)
     {
+        $request=json_decode($request->getContent(),true);
         $validator=$this->validation($request);
         if($validator->fails()){
             return response()->json([
@@ -40,8 +41,8 @@ class PostulacionController extends Controller
         }
 
         Postulacion::create([
-            'titulo'=>$request->titulo,
-            'descripcion'=>$request->descripcion,
+            'titulo'=>$request['titulo'],
+            'descripcion'=>$request['descripcion'],
             'id_usuario_creador'=>auth()->user()->id,
         ]);
 
@@ -51,9 +52,10 @@ class PostulacionController extends Controller
         ]);
     }
 
-    protected function validation(Request $request)
+    protected function validation($request)
     {
-        return Validator::make($request->all(),[
+        Log::info($request);
+        return Validator::make($request,[
             'titulo'=>'required',
             'descripcion' =>'required',
         ]);
