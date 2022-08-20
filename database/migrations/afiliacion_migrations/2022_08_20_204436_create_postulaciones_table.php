@@ -13,12 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('tbr_cuentas', function (Blueprint $table) {
+        Schema::create('postulaciones', function (Blueprint $table) {
             $table->id();
+            $table->string('titulo')->nullable();
+            $table->longText('descripcion')->nullable();
+            $table->foreignId('id_postulante_seleccionado')->nullable()->constrained('users')->onDelete('cascade');
+            $table->enum('estado',['A','E','C']);
             $table->foreignId('id_usuario_creador')->constrained('users')->onDelete('cascade');
-            $table->string('numero_cuenta');
-            $table->string('institucion_financiera');
-            $table->enum('status', ['A','E']);
             $table->timestamps();
         });
     }
@@ -30,6 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tbr_cuentas');
+        Schema::dropIfExists('postulaciones');
     }
 };

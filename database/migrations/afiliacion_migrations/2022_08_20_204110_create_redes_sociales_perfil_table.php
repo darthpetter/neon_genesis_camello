@@ -13,9 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('tbr_sexos', function (Blueprint $table) {
+        Schema::create('redes_sociales_perfil', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->string('facebook_profile')->nullable();
+            $table->string('twitter_profile')->nullable();
+            $table->string('instagram_profile')->nullable();
+            $table->string('url_personal')->nullable();
             $table->enum('status', ['A','E']);
             $table->timestamps();
         });
@@ -28,6 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tbr_sexos');
+        Schema::dropIfExists('redes_sociales_perfil');
     }
 };

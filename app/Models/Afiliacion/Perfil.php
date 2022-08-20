@@ -10,7 +10,7 @@ use App\Models\Afiliacion\SocialMediaProfile;
 class Perfil extends Model
 {
     use HasFactory;
-    protected $table='tbm_perfiles';
+    protected $table='perfiles';
 
     protected $fillable=[
         'id_tipo_identificacion',

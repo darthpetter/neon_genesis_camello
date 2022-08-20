@@ -13,11 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('tbm_perfiles', function (Blueprint $table) {
+        Schema::create('perfiles', function (Blueprint $table) {
             $table->id();
             $table->foreignId('id_usuario')->constrained('users')->unique();
-            $table->foreignId('id_redes_sociales')->nullable()->constrained('tbd_perfiles_rrss')->unique();
-            $table->foreignId('id_sexo')->nullable()->constrained('tbr_sexos');
+            $table->foreignId('id_redes_sociales')->nullable()->constrained('redes_sociales_perfil')->unique();
+            $table->foreignId('id_sexo')->nullable()->constrained('sexos');
 
             $table->string('nombres')->nullable();
             $table->string('apellidos')->nullable();
@@ -44,6 +44,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tbm_perfiles');
+        Schema::dropIfExists('perfiles');
     }
 };

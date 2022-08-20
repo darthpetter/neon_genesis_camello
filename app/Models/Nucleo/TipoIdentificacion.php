@@ -9,7 +9,7 @@ class TipoIdentificacion extends Model
 {
     use HasFactory;
 
-    protected $table='tbr_tipos_identificacion';
+    protected $table='tipos_identificacion';
 
     protected $fillable=[
         'descripcion',

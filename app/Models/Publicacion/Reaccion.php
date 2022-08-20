@@ -10,7 +10,7 @@ use App\Models\Publicacion\Publicacion;
 class Reaccion extends Model
 {
     use HasFactory;
-    protected $table='tbm_reacciones';
+    protected $table='reacciones';
     protected $attributes = [
         'status' => 'A',
     ];

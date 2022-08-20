@@ -10,7 +10,7 @@ class SocialMediaProfile extends Model
 {
     use HasFactory;
 
-    protected $table='tbd_perfiles_rrss';
+    protected $table='redes_sociales_perfil';
 
     protected $fillable=[
         'facebook_profile',

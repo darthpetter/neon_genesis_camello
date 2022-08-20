@@ -13,11 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('tbm_perfiles', function (Blueprint $table) {
-            $table->after('id_usuario',function($table){
-                $table->foreignId('id_tipo_identificacion')->nullable()->constrained('tbr_tipos_identificacion');
-                $table->string('identificacion')->nullable()->unique();
-            });
+        Schema::create('sexos', function (Blueprint $table) {
+            $table->id();
+            $table->string('name');
+            $table->enum('status', ['A','E']);
+            $table->timestamps();
         });
     }
 
@@ -28,6 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tbm_perfiles');
+        Schema::dropIfExists('sexos');
     }
 };

@@ -13,12 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('tbd_perfiles_rrss', function (Blueprint $table) {
+        Schema::create('roles', function (Blueprint $table) {
             $table->id();
-            $table->string('facebook_profile')->nullable();
-            $table->string('twitter_profile')->nullable();
-            $table->string('instagram_profile')->nullable();
-            $table->string('url_personal')->nullable();
+            $table->string('name');
             $table->enum('status', ['A','E']);
             $table->timestamps();
         });
@@ -31,6 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tbd_perfiles_rrss');
+        Schema::dropIfExists('roles');
     }
 };

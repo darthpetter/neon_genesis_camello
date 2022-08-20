@@ -13,12 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('tbr_formas_pago', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('id_usuario_creador')->constrained('users')->onDelete('cascade');
-            $table->string('descripcion');
-            $table->enum('status', ['A','E']);
-            $table->timestamps();
+        Schema::table('perfiles', function (Blueprint $table) {
+            $table->after('id_usuario',function($table){
+                $table->foreignId('id_tipo_identificacion')->nullable()->constrained('tipos_identificacion');
+                $table->string('identificacion')->nullable()->unique();
+            });
         });
     }
 
@@ -29,6 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tbr_formas_pago');
+        Schema::dropIfExists('perfiles');
     }
 };

@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Postulacion extends Model
 {
     use HasFactory;
-    protected $table='tbm_postulaciones';
+    protected $table='postulaciones';
 
     protected $fillable=[
         'titulo',

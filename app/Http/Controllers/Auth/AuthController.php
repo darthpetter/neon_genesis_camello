@@ -21,7 +21,7 @@ class AuthController extends Controller
             'name'=>'required|string|max:255',
             'email'=>'required|string|email|max:255|unique:users',
             'password'=>'required|string|min:8',
-            'id_rol'=>'required|exists:tbr_roles,id'
+            'id_rol'=>'required|exists:roles,id'
         ]);
 
         $user=User::factory()->create([
@@ -66,7 +66,7 @@ class AuthController extends Controller
             'name'=>'required|string|max:255',
             'email'=>'required|string|email|max:255|unique:users',
             'password'=>'required|string|min:8',
-            'id_rol'=>'required|exists:tbr_roles,id'
+            'id_rol'=>'required|exists:roles,id'
         ]);
     }
 

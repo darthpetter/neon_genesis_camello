@@ -13,12 +13,8 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('tbr_categorias_labor', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('id_area_labor')->constrained('tbr_areas_labor')->onDelete('cascade');
-            $table->string('descripcion');
-            $table->enum('status', ['A','E']);
-            $table->timestamps();
+        Schema::table('users', function (Blueprint $table) {
+            $table->foreignId('id_rol')->after('password')->constrained('roles')->onDelete('cascade');
         });
     }
 
@@ -29,6 +25,7 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tbr_categorias_labor');
+        Schema::dropIfExists('perfiles');
+        Schema::dropIfExists('users');
     }
 };

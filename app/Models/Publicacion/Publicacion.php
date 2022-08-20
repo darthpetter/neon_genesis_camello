@@ -9,7 +9,7 @@ use App\Models\User;
 class Publicacion extends Model
 {
     use HasFactory;
-    protected $table='tbm_publicaciones';
+    protected $table='publicaciones';
 
     protected $fillable=['contenido'];
 
