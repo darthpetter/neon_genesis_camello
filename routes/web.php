@@ -56,7 +56,7 @@ Route::middleware([
             Route::get('/postulaciones','getByUserCreator')->name('postulaciones');
             Route::get('/postulacion/{id}','getPostulacionById');
             Route::post('/postulacion','store')->name('postulacion.create');
-            Route::delete('/eliminar_postulacion','eliminarPostulacion')->name('postulacion.eliminar');
+            Route::delete('/postulacion','eliminarPostulacion')->name('postulacion.eliminar');
         });
 
 });

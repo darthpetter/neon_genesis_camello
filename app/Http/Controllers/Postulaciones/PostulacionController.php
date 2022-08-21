@@ -67,11 +67,14 @@ class PostulacionController extends Controller
         ]);
     }
     
-    public function eliminarPostulacion($id)
+    public function eliminarPostulacion(Request $request)
     {
-        $postulacion=Postulacion::where('id',$id)
-        ->where('id_usuario_creador',auth()->user()->id)
-        ->update(['estado'=>'E']);
+        Log::info($request->all());
+
+        $postulacion=Postulacion::where('id_postulacion',$request->id_postulacion);
+        //$postulacion=Postulacion::find('id',$request->id_postulacion);
+        
+        //$postulacion->update(['estado'=>'E']);
 
         return response()->json([
             'status'=>200,
