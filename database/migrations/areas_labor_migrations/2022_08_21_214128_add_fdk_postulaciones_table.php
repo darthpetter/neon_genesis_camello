@@ -13,13 +13,8 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('tipos_identificacion', function (Blueprint $table) {
-            $table->id();
-            $table->string("descripcion");
-            $table->integer("max_caracteres");
-            $table->boolean("alfanumerico");
-            $table->enum('status', ['A','E']);
-            $table->timestamps();
+        Schema::table('postulaciones', function (Blueprint $table) {
+            $table->foreignId('id_area_labor')->after('descripcion')->constrained('areas_labor')->onDelete('cascade');
         });
     }
 
@@ -30,6 +25,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tipos_identificacion');
+        Schema::dropIfExists('postulaciones');
     }
 };

@@ -85,6 +85,16 @@
                                     <x-jet-textarea onchange="handleInput(event)" class="w-full" placeholder="Descripcion" name="descripcion" id="descripcion"/>
                                     <span id="error_descripcion" name="error_descripcion" class="text-danger-500"></span>
                                 </div>
+                                <div>
+                                    <x-jet-label value="Area de Labor"/>
+                                    <x-jet-select class="w-full" id="id_area_labor" name="id_area_labor">
+                                        <option value="0" selected disabled>--seleccione--</option>
+                                        @foreach ($areas_labor as $area )
+                                            <option value="{{$area->id}}">{{ $area->nombre }}</option>
+                                        @endforeach
+                                    </x-jet-select>
+                                    <span id="error_id_area_labor" name="error_area_labor" class="text-danger-500"></span>
+                                </div>
                             </div>
                         </form>
                     </div>
@@ -153,11 +163,14 @@
 
     async function guardar()
     {
-        const titulo=document.getElementById('titulo');
-        const descripcion=document.getElementById('descripcion');
+        const titulo=$('#titulo').val()
+        const descripcion=$('#descripcion').val()
+        const id_area_labor=$('#id_area_labor').val()
+
         const request={
-            titulo:titulo.value,
-            descripcion:descripcion.value,
+            titulo,
+            descripcion,
+            id_area_labor,
         }
 
         await peticionGuardar(request)
@@ -165,6 +178,7 @@
                 if(response.status==401){
                     $('#error_titulo').html(response.error.titulo ? response.error.titulo : '');
                     $('#error_descripcion').html(response.error.descripcion ? response.error.descripcion : '')
+                    $('#error_id_area_labor').html(response.error.id_area_labor ? response.error.id_area_labor : '')
                 }else if(response.status==200){
                     $("#btn_guardar_postulacion").attr("disabled", true);
                     Swal.fire({

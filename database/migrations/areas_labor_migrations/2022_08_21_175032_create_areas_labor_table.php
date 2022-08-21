@@ -13,12 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('tipos_identificacion', function (Blueprint $table) {
+        Schema::create('areas_labor', function (Blueprint $table) {
             $table->id();
-            $table->string("descripcion");
-            $table->integer("max_caracteres");
-            $table->boolean("alfanumerico");
+            $table->string('nombre');
+            $table->string('descripcion')->nullable();
             $table->enum('status', ['A','E']);
+            $table->foreignId('id_usuario_creador')->constrained('users')->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -30,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tipos_identificacion');
+        Schema::dropIfExists('areas_labor');
     }
 };

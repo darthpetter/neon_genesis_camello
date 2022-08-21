@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Postulaciones;
 
 use App\Http\Controllers\Controller;
+use App\Models\Nucleo\AreaLabor;
 use Illuminate\Http\Request;
 use App\Models\Postulaciones\Postulacion;
 use Illuminate\Support\Facades\Validator;
@@ -16,7 +17,9 @@ class PostulacionController extends Controller
         $postulaciones=Postulacion::where('id_usuario_creador',auth()->user()->id)
         ->where('estado','!=','E')->get();
 
-        return view('cliente.postulaciones.index',compact('postulaciones'));
+        $areas_labor=AreaLabor::where('status','!=','E')->get();
+
+        return view('cliente.postulaciones.index',compact('postulaciones','areas_labor'));
     }
 
     public function index(){
@@ -38,6 +41,7 @@ class PostulacionController extends Controller
     public function store(Request $request)
     {
         $request=json_decode($request->getContent(),true);
+        
         $validator=$this->validation($request);
         if($validator->fails()){
             return response()->json([
@@ -49,6 +53,7 @@ class PostulacionController extends Controller
         Postulacion::create([
             'titulo'=>$request['titulo'],
             'descripcion'=>$request['descripcion'],
+            'id_area_labor' => $request['id_area_labor'],
             'id_usuario_creador'=>auth()->user()->id,
         ]);
 
@@ -64,6 +69,7 @@ class PostulacionController extends Controller
         return Validator::make($request,[
             'titulo'=>'required',
             'descripcion' =>'required',
+            'id_area_labor' =>'required|exists:areas_labor,id',
         ]);
     }
     

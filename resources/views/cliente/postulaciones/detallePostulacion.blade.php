@@ -30,8 +30,8 @@
                                 <input
                                 id="titulo" name="titulo"
                                 type="text" 
-                                class="w-full bg-none border-none header-title text-2xl font-semibold text-guayaquil-700"
-                                value={{$postulacion->titulo}}
+                                class="w-full bg-none border-none header-title text-md md:text-2xl font-semibold text-guayaquil-700"
+                                value="{{$postulacion->titulo}}"
                                 disabled
                                 />
                             </div>
