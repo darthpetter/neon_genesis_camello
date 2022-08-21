@@ -54,6 +54,7 @@ Route::middleware([
 
         Route::controller(PostulacionController::class)->group(function (){
             Route::get('/postulaciones','getByUserCreator')->name('postulaciones');
+            Route::get('/postulacion/{id}','getPostulacionById');
             Route::post('/postulacion','store')->name('postulacion.create');
             Route::delete('/eliminar_postulacion','eliminarPostulacion')->name('postulacion.eliminar');
         });

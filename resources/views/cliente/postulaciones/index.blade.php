@@ -1,12 +1,17 @@
 @php
-    $style_options="block p-2 font-mono hover:bg-guayaquil-400"
+    $style_options="block p-2 font-mono hover:bg-guayaquil-400";
+    $style_btn_primary="dark:bg-guayaquil-600 dark:hover:bg-guayaquil-700 dark:focus:bg-guayaquil-400 bg-neutral-800 hover:bg-neutral-900 text-white py-2 px-4 rounded-lg";
 @endphp
 <x-app-layout>
-    <div x-data="modal()" class="bg-guayaquil-600 dark:bg-neutral-800 p-5 md:p-10">
+    <div x-data="modal()" class="bg-guayaquil-600 dark:bg-neutral-800 min-h-screen p-5 md:p-10">
 
         <div class="grid grid-cols-1 md:gap-4 gap-2 px-10">
             <span>
-                <button x-on:click="open()" type="button" class="inline-block font-normal text-center px-3 py-2 leading-normal text-base rounded cursor-pointer text-white dark:bg-guayaquil-600 bg-neutral-500" data-toggle="modal" data-target="#exampleModalTwo">
+                <button x-on:click="open()" 
+                type="button" 
+                class="{{$style_btn_primary}}" 
+                data-toggle="modal" data-target="#exampleModalTwo"
+                >
                     Crear
                 </button>
             </span>
@@ -15,8 +20,10 @@
                 <div class="grid grid-cols-1 bg-white rounded-md p-5 relative">
                     <span class="header-title text-xl text-neutral-800">{{ __($postulacion->titulo) }}</span>
                     <span class="font-mono font-light text-neutral-600">
-                        {{ __($postulacion->descripcion) }}
+                        <textarea class="bg-none border-none overflow-hidden w-full min-h-fit" 
+                        rows="auto" disabled style="resize: none">{{ __($postulacion->descripcion) }}</textarea>
                     </span>
+                    <a class="text-green-500 " href="/postulacion/{{$postulacion->id}}">Detalles</a>
                 </div>
             @endforeach
 
@@ -111,6 +118,22 @@
         isOpening() { return this.state !== 'CLOSED' },
         }
     }
+    function modal2() {
+        return {
+        state: 'CLOSED', // [CLOSED, TRANSITION, OPEN]
+        open() {
+            this.state = 'TRANSITION'
+            setTimeout(() => { this.state = 'OPEN' }, 50)
+        },
+        close() {
+            this.state = 'TRANSITION'
+            setTimeout(() => { this.state = 'CLOSED' }, 300)
+        },
+        isOpen() { return this.state === 'OPEN' },
+        isOpening() { return this.state !== 'CLOSED' },
+        }
+    }
+    
     
 
     async function guardar()

@@ -28,6 +28,12 @@ class PostulacionController extends Controller
             'status'=>200,
         ]);
     }
+
+    public function getPostulacionById($id)
+    {
+        $postulacion=Postulacion::find($id);
+        return view('cliente.postulaciones.detallePostulacion',compact('postulacion'));
+    }
     
     public function store(Request $request)
     {
