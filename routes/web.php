@@ -52,11 +52,12 @@ Route::middleware([
             Route::post('/rrss_store','store')->name('rrss.store');
         });
 
-        Route::controller(PostulacionController::class)->group(function (){
-            Route::get('/postulaciones','getByUserCreator')->name('postulaciones');
-            Route::get('/postulacion/{id}','getPostulacionById');
-            Route::post('/postulacion','store')->name('postulacion.create');
-            Route::delete('/postulacion','eliminarPostulacion')->name('postulacion.eliminar');
+        Route::middleware(['rolAccess:CLIENTE'])->group(function () {
+            Route::controller(PostulacionController::class)->group(function (){
+                Route::get('/postulaciones','index')->name('postulaciones');
+                Route::get('/postulacion/{id}','getPostulacionById');
+                Route::post('/postulacion','store')->name('postulacion.create');
+                Route::delete('/postulacion','eliminarPostulacion')->name('postulacion.eliminar');
+            });
         });
-
 });

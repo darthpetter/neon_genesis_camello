@@ -15,15 +15,6 @@
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M12.066 11.2a1 1 0 000 1.6l5.334 4A1 1 0 0019 16V8a1 1 0 00-1.6-.8l-5.333 4zM4.066 11.2a1 1 0 000 1.6l5.334 4A1 1 0 0011 16V8a1 1 0 00-1.6-.8l-5.334 4z" />
                                 </svg>
                             </a>
-
-
-                            <button type="button"
-                            onclick="habilitar_edicion()"
-                            class="{{ $style_navicon }}">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
-                                </svg>
-                            </button>
                         </div>
                         <div class="grid grid-cols-1 gap-4 border border-neutral-800 rounded-lg p-2">                            
                             <div>
@@ -58,12 +49,3 @@
         </div>
     </div>
 </x-app-layout>
-
-<script>
-    function habilitar_edicion()
-    {
-        $("#titulo").attr('disabled',false);
-        $("#descripcion").attr('disabled',false);
-        $("#btn_update").removeClass("hidden");
-    }
-</script>

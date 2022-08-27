@@ -17,7 +17,7 @@
             </span>
 
             @foreach ($postulaciones as $postulacion )                
-                <div class="grid grid-cols-1 bg-white rounded-md p-5 relative">
+                <div id="postulacion_{{ $postulacion->id }}" class="grid grid-cols-1 bg-white rounded-md p-5 relative">
                     <div class="flex items-center justify-end">
                         <div>
                             <a class="text-guayaquil-500 hover:text-emerald-500" href="/postulacion/{{$postulacion->id}}">
@@ -159,8 +159,6 @@
         }
     }
     
-    
-
     async function guardar()
     {
         const titulo=$('#titulo').val()
@@ -225,6 +223,23 @@
         await peticionEliminar(request)
             .then(response=>{
                 console.log("🚀 ~ file: index.blade.php ~ line 215 ~ response", response)
+                if(response.status=200){
+                    $(`#postulacion_${id_postulacion}`).addClass('animate-pulse')
+                    Swal.fire({
+                        title: 'Postulación Eliminada Correctamente',
+                        icon: 'success',
+                    })
+
+                    setTimeout(()=>{
+                        $(`#postulacion_${id_postulacion}`).remove()
+                    },2000)
+                }else{
+                    Swal.fire({
+                        title: 'ERROR',
+                        message:'Algo salió mal):',
+                        icon: 'error',
+                    })
+                }
             });
     }
 

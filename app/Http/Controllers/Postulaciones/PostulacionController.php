@@ -12,17 +12,24 @@ use Illuminate\Support\Facades\Log;
 
 class PostulacionController extends Controller
 {
-    public function getByUserCreator(Request $request)
+    public function index()
+    {
+        if(auth()->user()->id_rol==2){
+            return $this->getFeedPostulaciones();
+        }elseif(auth()->user()->id_rol==3){
+            return $this->getByUserCreator();
+        }
+    }
+    public function getByUserCreator()
     {
         $postulaciones=Postulacion::where('id_usuario_creador',auth()->user()->id)
         ->where('estado','!=','E')->get();
 
         $areas_labor=AreaLabor::where('status','!=','E')->get();
-
         return view('cliente.postulaciones.index',compact('postulaciones','areas_labor'));
     }
 
-    public function index(){
+    public function getFeedPostulaciones(){
 
         $postulaciones=Postulacion::paginate(10);
 
@@ -75,17 +82,25 @@ class PostulacionController extends Controller
     
     public function eliminarPostulacion(Request $request)
     {
-        Log::info($request->all());
+        try{
+            
+            $requestContent=json_decode($request->getContent());
+            $postulacion=Postulacion::findOrFail($requestContent->id_postulacion);
+            $postulacion->estado='E';
+            $postulacion->update();
+    
+            return response()->json([
+                'status'=>200,
+                'postulacion'=>$postulacion,
+            ]);
+        }catch(\Exception $e){
+            Log::alert('PostulacionController -> eliminarPostulacion : '.$e->getMessage());
+            return response()->json([
+                'status'=>400,
+                'message'=> 'Algo salió mal. No se pudó efecturar la eliminación',
+            ]);
+        }
 
-        $postulacion=Postulacion::where('id_postulacion',$request->id_postulacion);
-        //$postulacion=Postulacion::find('id',$request->id_postulacion);
-        
-        //$postulacion->update(['estado'=>'E']);
-
-        return response()->json([
-            'status'=>200,
-            'postulacion'=>$postulacion,
-        ]);
     }
 
     public function cerrarPostulacion($id){
