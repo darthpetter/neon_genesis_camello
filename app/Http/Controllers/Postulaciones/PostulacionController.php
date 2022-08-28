@@ -6,9 +6,11 @@ use App\Http\Controllers\Controller;
 use App\Models\Nucleo\AreaLabor;
 use Illuminate\Http\Request;
 use App\Models\Postulaciones\Postulacion;
+use App\Models\Postulaciones\AsignacionPostulacion;
 use Illuminate\Support\Facades\Validator;
 
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\DB;
 
 class PostulacionController extends Controller
 {
@@ -22,8 +24,10 @@ class PostulacionController extends Controller
     }
     public function getByUserCreator()
     {
-        $postulaciones=Postulacion::where('id_usuario_creador',auth()->user()->id)
-        ->where('estado','!=','E')->get();
+        $postulaciones=Postulacion::where('postulaciones.id_usuario_creador',auth()->user()->id)
+        ->where('postulaciones.estado','!=','E')->join('areas_labor','postulaciones.id_area_labor','=','areas_labor.id')
+        ->select('postulaciones.*','areas_labor.nombre as area_labor_descrip')
+        ->get();
 
         $areas_labor=AreaLabor::where('status','!=','E')->get();
         return view('cliente.postulaciones.index',compact('postulaciones','areas_labor'));
@@ -31,12 +35,12 @@ class PostulacionController extends Controller
 
     public function getFeedPostulaciones(){
 
-        $postulaciones=Postulacion::paginate(10);
+        $postulaciones=Postulacion::where('postulaciones.estado','!=','E')
+        ->join('areas_labor','postulaciones.id_area_labor','=','areas_labor.id')
+        ->select('postulaciones.*','areas_labor.nombre as area_labor_descrip')
+        ->paginate(10);
 
-        return response()->json([
-            'postulaciones'=>$postulaciones,
-            'status'=>200,
-        ]);
+        return view('profesionista.postulaciones.index',compact('postulaciones'));
     }
 
     public function getPostulacionById($id)
@@ -72,7 +76,6 @@ class PostulacionController extends Controller
 
     protected function validation($request)
     {
-        Log::info($request);
         return Validator::make($request,[
             'titulo'=>'required',
             'descripcion' =>'required',
@@ -134,4 +137,46 @@ class PostulacionController extends Controller
             'postulacion'=>$postulacion,
         ]);
     }
+
+    public function detallePostulacionProf($id)
+    {
+        $postulacion=Postulacion::find($id);
+        $asignacion=AsignacionPostulacion::where('id_usuario_creador',auth()->user()->id)
+        ->where('estado','A')->where('id_postulacion',$id)->get();
+        $asignaciones=AsignacionPostulacion::select('asignacion_postulaciones.*','perfiles.nombres','perfiles.apellidos')
+        ->where('asignacion_postulaciones.estado','A')
+        ->where('asignacion_postulaciones.id_postulacion',$id)
+        ->join('users','users.id','=','asignacion_postulaciones.id_usuario_creador')
+        ->join('perfiles','perfiles.id_usuario','=','users.id')->get();
+
+        return view('profesionista.postulaciones.detalle',compact('postulacion','asignacion','asignaciones'));
+    }
+
+    public function postularse(Request $request)
+    {
+        try{
+            $request->validate([
+                'id_postulacion' => 'required|exists:postulaciones,id',
+                'monto_propuesto'=>'required|numeric',
+                'comentario'=>'required',
+            ]);
+
+            AsignacionPostulacion::create([
+                'id_postulacion' => $request->id_postulacion,
+                'monto_propuesto' => $request->monto_propuesto,
+                'comentario' => $request->comentario,
+                'id_usuario_creador' => auth()->user()->id,
+            ]);
+
+            return redirect()->route('postulaciones');
+        }catch(\Exception $e){
+            Log::error("ARCHIVO: ".__FILE__." LINEA: ".__LINE__."\n ERROR: ".$e->getMessage());
+            return response()->json([
+                'code'   => 'ERROR',
+                'mensaje' => $e->getMessage(),
+            ]);
+        }
+    }
+
+
 }

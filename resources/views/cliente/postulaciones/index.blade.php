@@ -5,7 +5,7 @@
 <x-app-layout>
     <div x-data="modal()" class="bg-guayaquil-600 dark:bg-neutral-800 min-h-screen p-5 md:p-10">
 
-        <div class="grid grid-cols-1 md:gap-4 gap-2 px-10">
+        <div class="grid grid-cols-1 md:gap-4 gap-2 p-5">
             <span>
                 <button x-on:click="open()" 
                 type="button" 
@@ -18,21 +18,26 @@
 
             @foreach ($postulaciones as $postulacion )                
                 <div id="postulacion_{{ $postulacion->id }}" class="grid grid-cols-1 bg-white rounded-md p-5 relative">
-                    <div class="flex items-center justify-end">
+                    <div class="flex items-center justify-between pb-4">
                         <div>
-                            <a class="text-guayaquil-500 hover:text-emerald-500" href="/postulacion/{{$postulacion->id}}">
-                                <svg class="h-6 w-6" viewBox="0 0 21 21" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" transform="translate(3 3)">
-                                    <path d="m2.5.5h10c1.1045695 0 2 .8954305 2 2v10c0 1.1045695-.8954305 2-2 2h-10c-1.1045695 0-2-.8954305-2-2v-10c0-1.1045695.8954305-2 2-2z"/><path d="m2.5 2.5h10c1.1045695 0 2 .8954305 2 2v-2c0-1-.8954305-2-2-2h-10c-1.1045695 0-2 1-2 2v2c0-1.1045695.8954305-2 2-2z" fill="currentColor"/><path d="m4.498 7.5h1"/><path d="m4.498 5.5h3.997"/><path d="m4.498 9.5h5.997"/><path d="m4.498 11.5h3.997"/></g>
-                                </svg>
-                            </a>
+                            <span class="text-sm px-4 py-1 border border-guayaquil-700 text-guayaquil-700">{{ $postulacion->area_labor_descrip }}</span>
                         </div>
-                        <button 
-                            type="button" onclick="eliminar({{ $postulacion->id }})"
-                            class="text-neutral-900 hover:text-danger-500">
-                            <svg class="h-6 w-6" viewBox="0 0 21 21" xmlns="http://www.w3.org/2000/svg">
-                                <g fill="none" fill-rule="evenodd" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" transform="translate(2 2)"><circle cx="8.5" cy="8.5" r="8"/><g transform="matrix(0 1 -1 0 17 0)"><path d="m5.5 11.5 6-6"/><path d="m5.5 5.5 6 6"/></g></g>
-                            </svg>
-                        </button>
+                        <div class="flex">
+                            <div>
+                                <a class="text-guayaquil-500 hover:text-emerald-500" href="/postulacion/{{$postulacion->id}}">
+                                    <svg class="h-6 w-6" viewBox="0 0 21 21" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" transform="translate(3 3)">
+                                        <path d="m2.5.5h10c1.1045695 0 2 .8954305 2 2v10c0 1.1045695-.8954305 2-2 2h-10c-1.1045695 0-2-.8954305-2-2v-10c0-1.1045695.8954305-2 2-2z"/><path d="m2.5 2.5h10c1.1045695 0 2 .8954305 2 2v-2c0-1-.8954305-2-2-2h-10c-1.1045695 0-2 1-2 2v2c0-1.1045695.8954305-2 2-2z" fill="currentColor"/><path d="m4.498 7.5h1"/><path d="m4.498 5.5h3.997"/><path d="m4.498 9.5h5.997"/><path d="m4.498 11.5h3.997"/></g>
+                                    </svg>
+                                </a>
+                            </div>
+                            <button 
+                                type="button" onclick="eliminar({{ $postulacion->id }})"
+                                class="text-neutral-900 hover:text-danger-500">
+                                <svg class="h-6 w-6" viewBox="0 0 21 21" xmlns="http://www.w3.org/2000/svg">
+                                    <g fill="none" fill-rule="evenodd" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" transform="translate(2 2)"><circle cx="8.5" cy="8.5" r="8"/><g transform="matrix(0 1 -1 0 17 0)"><path d="m5.5 11.5 6-6"/><path d="m5.5 5.5 6 6"/></g></g>
+                                </svg>
+                            </button>
+                        </div>
                     </div>
                     <span class="header-title text-xl text-neutral-800">{{ __($postulacion->titulo) }}</span>
                     <span class="font-mono font-light text-neutral-600">

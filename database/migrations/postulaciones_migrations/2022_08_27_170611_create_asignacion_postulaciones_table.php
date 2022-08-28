@@ -13,13 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('postulaciones', function (Blueprint $table) {
+        Schema::create('asignacion_postulaciones', function (Blueprint $table) {
             $table->id();
-            $table->string('titulo')->nullable();
-            $table->longText('descripcion')->nullable();
-            $table->foreignId('id_postulante_seleccionado')->nullable()->constrained('users')->onDelete('cascade');
-            $table->enum('estado',['A','E','C']);
+            $table->foreignId('id_postulacion')->constrained('postulaciones')->onDelete('cascade');
+            $table->decimal('monto_propuesto',16,2);
+            $table->text('comentario')->nullable();
             $table->foreignId('id_usuario_creador')->constrained('users')->onDelete('cascade');
+            $table->enum('estado',['A','E']);
             $table->timestamps();
         });
     }
@@ -31,6 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('postulaciones');
+        Schema::dropIfExists('asignacion_postulaciones');
     }
 };

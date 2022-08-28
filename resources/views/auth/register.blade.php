@@ -33,8 +33,8 @@
                 <x-jet-label for="password_confirmation" value="{{ __('¿Qué Buscas?') }}" />
                 <select id="id_rol" name="id_rol" class="block mt-1 w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm">
                     <option selected disabled value="0"> -- Seleccione -- </option>
-                    <option value="2">Contratar un servicio</option>
-                    <option value="3">Publicitar mi trabajo</option>
+                    <option value="3">Contratar un servicio</option>
+                    <option value="2">Publicitar mi trabajo</option>
                 </select>
             </div>
 

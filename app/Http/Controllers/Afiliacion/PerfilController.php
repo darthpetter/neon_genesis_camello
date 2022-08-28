@@ -43,8 +43,8 @@ class PerfilController extends Controller
         
 
         $request->validate([
-            'id_tipo_identificacion'=>'required|exists:tbr_tipos_identificacion,id',
-            'identificacion'=>[$regla_identificacion,Rule::unique('tbm_perfiles')->ignore($perfil->identificacion,'identificacion')],
+            'id_tipo_identificacion'=>'required|exists:tipos_identificacion,id',
+            'identificacion'=>[$regla_identificacion,Rule::unique('perfiles')->ignore($perfil->identificacion,'identificacion')],
             'nombres'=>'required|max:50',
             'apellidos'=>'required|max:50',
             'bio'=>'required|max:255',
@@ -55,7 +55,7 @@ class PerfilController extends Controller
             'telefono2'=>'nullable|max:9',
             'celular1'=>'nullable|max:10',
             'celular2'=>'nullable|max:10',
-            'id_sexo'=>'nullable|exists:tbr_sexos,id',
+            'id_sexo'=>'nullable|exists:sexos,id',
         ]);
     
 
