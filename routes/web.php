@@ -56,9 +56,10 @@ Route::middleware([
         
         Route::middleware(['rolAccess:CLIENTE'])->group(function () {
             Route::controller(PostulacionController::class)->group(function (){
-                Route::get('/postulacion/{id}','getPostulacionById');
+                Route::get('/postulacion/{id}','detallePostulacionCli');
                 Route::post('/postulacion','store')->name('postulacion.create');
                 Route::delete('/postulacion','eliminarPostulacion')->name('postulacion.eliminar');
+                Route::post('/postulacion_seleccion','seleccionPostulante')->name('postulacion.seleccion');
             });
         });
         Route::middleware(['rolAccess:PROFESIONISTA'])->group(function () {

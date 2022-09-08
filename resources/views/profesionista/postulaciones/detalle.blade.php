@@ -6,9 +6,14 @@
                     <span class="header-title text-xl">{{ $postulacion->titulo }}</span>
                 </div>
                 <div>
-                    <textarea rows="6" class="w-full border-none overflow-hidden" disabled readonly
-                    >{{ $postulacion->descripcion }}</textarea>
+                    <textarea rows="6" class="w-full border-none overflow-hidden"
+                    disabled readonly>{{ $postulacion->descripcion }}</textarea>
                 </div>
+                @if ($postulacion->id_postulante_seleccionado!==NULL && $postulacion->estado=='C')
+                    <div class="bg-emerald-300 bg-opacity-40 backdrop-blur-md rounded-md p-5">
+                        <span class="font-semibold header-title mr-4">Profesionista seleccionado:</span><span>{{ $seleccionado->nombres?$seleccionado->nombres:" " }}&nbsp;{{ $seleccionado->apellidos?$seleccionado->apellidos:" " }}</span>
+                    </div>
+                @endif    
             </div>
             @if($asignacion->count()==0)
                 <div class="p-5 rounded-md bg-white">
