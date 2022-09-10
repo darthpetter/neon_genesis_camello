@@ -12,12 +12,14 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\DB;
 
+use function PHPUnit\Framework\isEmpty;
+
 class PostulacionController extends Controller
 {
     public function index(Request $request)
     {
         if (auth()->user()->id_rol == 2) {
-            return $this->getFeedPostulaciones();
+            return $this->getFeedPostulaciones($request);
         } elseif (auth()->user()->id_rol == 3) {
             return $this->getByUserCreator($request);
         }
@@ -25,14 +27,8 @@ class PostulacionController extends Controller
     public function getByUserCreator(Request $request)
     {
         $datos= $request->all();
-        $whereAreasLabor=" ";
-
-        foreach($datos as $key => $value)
-        {
-            if($value){
-                $whereAreasLabor.=" OR postulaciones.id_area_labor = $key ";
-            }
-        }
+        
+        sizeof($datos)>0  ? $whereAreasLabor=" AND postulaciones.id_area_labor IN (".implode(',',array_keys($datos)).")" : $whereAreasLabor=" ";
 
         $postulaciones =DB::select(DB::raw("SELECT postulaciones.*, areas_labor.nombre as area_labor_descrip
         FROM postulaciones
@@ -45,15 +41,25 @@ class PostulacionController extends Controller
         return view('cliente.postulaciones.index', compact('postulaciones', 'areas_labor'));
     }
 
-    public function getFeedPostulaciones()
+    public function getFeedPostulaciones(Request $request)
     {
+        $datos= $request->all();
+        
+        sizeof($datos)>0  ? $whereAreasLabor=" AND postulaciones.id_area_labor IN (".implode(',',array_keys($datos)).")" : $whereAreasLabor=" ";
 
         $postulaciones = Postulacion::where('postulaciones.estado', '!=', 'E')
             ->join('areas_labor', 'postulaciones.id_area_labor', '=', 'areas_labor.id')
             ->select('postulaciones.*', 'areas_labor.nombre as area_labor_descrip')
             ->paginate(10);
 
-        return view('profesionista.postulaciones.index', compact('postulaciones'));
+        $postulaciones =DB::select(DB::raw("SELECT postulaciones.*, areas_labor.nombre as area_labor_descrip
+            FROM postulaciones
+            JOIN areas_labor ON (areas_labor.id = postulaciones.id_area_labor)
+            WHERE postulaciones.estado!='E' ".$whereAreasLabor));
+
+        $areas_labor = AreaLabor::where('status', '!=', 'E')->get();
+
+        return view('profesionista.postulaciones.index', compact('postulaciones','areas_labor'));
     }
 
 

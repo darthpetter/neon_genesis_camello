@@ -1,6 +1,26 @@
 <x-app-layout>
     <div class="bg-guayaquil-600 dark:bg-neutral-800 min-h-screen p-5 md:p-10">
         <div class="grid grid-cols-1 md:gap-4 gap-2 px-10">
+            <form action="{{ route('postulaciones') }}">
+                <div class="grid grid-cols-5 gap-3">
+                    <div class="col-span-4 grid grid-cols-4 gap-3">
+                        @foreach ($areas_labor as $area) 
+                            <div class="border border-neutral-500 rounded-md px-4 py-2">
+                                <input name="{{ __($area->id) }}"  type="checkbox" class="p-2 rounded-md focus:bg-guayaquil-500 inline-block pr-3"
+                                @if(isset($params[$area->id]))
+                                    checked
+                                @endif/>
+                                <x-jet-label class="text-neutral-200 inline-block" value="{{ __($area->nombre) }}"/>
+                            </div>
+                        @endforeach
+                    </div>
+                    <x-jet-button type="submit" class="bg-emerald-500 text-white hover:bg-emerald-700 p-5 rounded-md flex items-center justify-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 15.75l-2.489-2.489m0 0a3.375 3.375 0 10-4.773-4.773 3.375 3.375 0 004.774 4.774zM21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>  
+                    </x-jet-button>
+                </div>
+            </form>
             @foreach ($postulaciones as $postulacion )                
                 <div id="postulacion_{{ $postulacion->id }}" class="grid grid-cols-1 bg-white rounded-md p-5 relative">
                     <div class="flex items-center justify-between pb-4">
