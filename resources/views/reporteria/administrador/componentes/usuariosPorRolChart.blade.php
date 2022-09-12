@@ -1,18 +1,18 @@
 <div class="chart-container">
     <div class="pie-chart-container">
-      <canvas id="engage_postulaciones"></canvas>
+      <canvas id="usuarios_por_rol"></canvas>
     </div>
 </div>
 <script>
     $(function(){
-        let cData = JSON.parse(`<?php echo $engage_postulaciones; ?>`);
-        let ctx = $("#engage_postulaciones");
+        let cData = JSON.parse(`<?php echo $usuarios_por_rol; ?>`);
+        let ctx = $("#usuarios_por_rol");
     
         let data = {
           labels: cData.label,
           datasets: [
             {
-              label: "Engage Postulaciones",
+              label: "Proporción de Usuarios por Rol",
               data: cData.data,
               backgroundColor: [
                 "#5A9AD4",
@@ -38,7 +38,7 @@
           title: {
             display: true,
             position: "top",
-            text: "Usuarios Registrados por ROL",
+            text: "Efectividad Selección",
             fontSize: 18,
             class: 'header-title',
             fontColor: "#111"
@@ -50,11 +50,16 @@
               fontColor: "#333",
               fontSize: 16
             }
-          }
+          },
+          scales: {
+                y: {
+                    beginAtZero: true
+                }
+            },
         };
   
         let chart1 = new Chart(ctx, {
-          type: "bar",
+          type: "pie",
           data: data,
           options: options
         });

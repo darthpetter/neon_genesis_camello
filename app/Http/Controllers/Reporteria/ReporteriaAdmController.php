@@ -12,21 +12,26 @@ class ReporteriaAdmController extends Controller
 {
     public function index()
     {
-        $user= User::select(DB::raw('COUNT(*) as count'),'roles.name as rol')
-        ->join('roles','roles.id','=','users.id_rol')
-        ->groupBy('users.id_rol')
-        ->orderBy('users.id_rol')
-        ->get();
-        
+        $usuarios_por_rol = $this->getDistributionUsersByRol();
+        $data['usuarios_por_rol'] = $usuarios_por_rol;
+
+        return view('reporteria.administrador.index', $data);
+    }
+
+    protected function getDistributionUsersByRol()
+    {
+        $users = User::select(DB::raw('COUNT(users.id) as num_usuarios'), 'roles.name as rol')
+            ->join('roles', 'roles.id', '=', 'users.id_rol')
+            ->groupBy('roles.id')
+            ->get();
+
         $data = [];
- 
-        foreach($user as $row) {
-            Log::info($row);
+
+        foreach ($users as $row) {
             $data['label'][] = $row->rol;
-            $data['data'][] = (int) $row->count;
+            $data['data'][] = (int) $row->num_usuarios;
         }
 
-        $data['chart_data'] = json_encode($data);
-        return view('reporteria.index',$data);
+        return json_encode($data);
     }
 }
