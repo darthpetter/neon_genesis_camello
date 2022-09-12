@@ -46,12 +46,7 @@ class PostulacionController extends Controller
         $datos= $request->all();
         
         sizeof($datos)>0  ? $whereAreasLabor=" AND postulaciones.id_area_labor IN (".implode(',',array_keys($datos)).")" : $whereAreasLabor=" ";
-
-        $postulaciones = Postulacion::where('postulaciones.estado', '!=', 'E')
-            ->join('areas_labor', 'postulaciones.id_area_labor', '=', 'areas_labor.id')
-            ->select('postulaciones.*', 'areas_labor.nombre as area_labor_descrip')
-            ->paginate(10);
-
+        
         $postulaciones =DB::select(DB::raw("SELECT postulaciones.*, areas_labor.nombre as area_labor_descrip
             FROM postulaciones
             JOIN areas_labor ON (areas_labor.id = postulaciones.id_area_labor)

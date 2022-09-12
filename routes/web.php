@@ -5,6 +5,8 @@ use App\Http\Controllers\Afiliacion\SocialMediaController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Postulaciones\PostulacionController;
+use App\Http\Controllers\Reporteria\ReporteriaController;
+use App\Http\Controllers\Reporteria\ReporteriaAdmController;
 
 /*
 |--------------------------------------------------------------------------
@@ -42,6 +44,10 @@ Route::middleware([
         Route::get('/dashboard', function () {
             return view('dashboard');
         })->name('dashboard');
+
+        Route::controller(ReporteriaController::class)->group(function(){
+            Route::get('/estadisticas','index')->name('estadisticas');
+        });
         
         Route::controller(PerfilController::class)->group(function(){
             Route::get('/completar_formulario','index')->name('completar_formulario');
@@ -68,4 +74,5 @@ Route::middleware([
                 Route::post('/postularse','postularse')->name('profesionista.postularse');
             });
         });
+
 });
