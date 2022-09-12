@@ -1,12 +1,12 @@
 <div class="chart-container">
     <div class="pie-chart-container">
-      <canvas id="usuarios_por_rol"></canvas>
+      <canvas id="asignaciones_por_labor"></canvas>
     </div>
 </div>
 <script>
     $(function(){
-        let cData = JSON.parse(`<?php echo $usuarios_por_rol; ?>`);
-        let ctx = $("#usuarios_por_rol");
+        let cData = JSON.parse(`<?php echo $asignaciones_por_labor; ?>`);
+        let ctx = $("#asignaciones_por_labor");
     
         let data = {
           labels: cData.label,
@@ -37,7 +37,7 @@
           title: {
             display: true,
             position: "top",
-            text: "Proporción de Usuarios por Rol",
+            text: "Proporcion de Areas de Labor más postuladas",
             fontSize: 18,
             class: 'header-title',
             fontColor: "#111"

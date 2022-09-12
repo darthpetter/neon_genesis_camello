@@ -10,6 +10,12 @@
             <div class="col-span-2 lg:col-span-1 p-4 border border-guayaquil-600 shadow-md rounded-lg">
                 @include('reporteria.administrador.componentes.usuariosPorRolChart');
             </div>
+            <div class="col-span-2 lg:col-span-1 p-4 border border-guayaquil-600 shadow-md rounded-lg">
+                @include('reporteria.administrador.componentes.proporcionLaborPostulaciones');
+            </div>
+            <div class="col-span-2 lg:col-span-1 p-4 border border-guayaquil-600 shadow-md rounded-lg">
+                @include('reporteria.administrador.componentes.proporcionAsignacionesALabor');
+            </div>
         </div>
     </div>
 </x-app-layout>
