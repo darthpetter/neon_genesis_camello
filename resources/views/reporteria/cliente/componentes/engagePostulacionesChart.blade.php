@@ -38,7 +38,7 @@
           title: {
             display: true,
             position: "top",
-            text: "Usuarios Registrados por ROL",
+            text: "Postulantes por oferta",
             fontSize: 18,
             class: 'header-title',
             fontColor: "#111"

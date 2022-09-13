@@ -12,7 +12,7 @@
           labels: cData.label,
           datasets: [
             {
-              label: "Users Count",
+              label: "Monto Promedio",
               data: cData.data,
               backgroundColor: [
                 "#5A9AD4",
@@ -38,7 +38,7 @@
           title: {
             display: true,
             position: "top",
-            text: "Usuarios Registrados por ROL",
+            text: "Monto promedio solicitado en tus postulaciones",
             fontSize: 18,
             class: 'header-title',
             fontColor: "#111"
