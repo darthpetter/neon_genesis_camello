@@ -160,9 +160,10 @@ class PostulacionController extends Controller
             ->join('users', 'users.id', '=', 'asignacion_postulaciones.id_usuario_creador')
             ->join('perfiles', 'perfiles.id_usuario', '=', 'users.id')->get();
 
-        $seleccionado = Postulacion::select('perfiles.nombres', 'perfiles.apellidos')
+            $seleccionado = Postulacion::select('perfiles.nombres', 'perfiles.apellidos')
             ->join('users', 'users.id', '=', 'postulaciones.id_postulante_seleccionado')
-            ->join('perfiles', 'perfiles.id_usuario', '=', 'users.id')->first();
+            ->join('perfiles', 'perfiles.id_usuario', '=', 'users.id')
+            ->where('postulaciones.id','=',$id)->first();
 
         return view('profesionista.postulaciones.detalle', compact('postulacion', 'asignacion', 'asignaciones', 'seleccionado'));
     }
@@ -179,7 +180,8 @@ class PostulacionController extends Controller
 
         $seleccionado = Postulacion::select('perfiles.nombres', 'perfiles.apellidos')
             ->join('users', 'users.id', '=', 'postulaciones.id_postulante_seleccionado')
-            ->join('perfiles', 'perfiles.id_usuario', '=', 'users.id')->first();
+            ->join('perfiles', 'perfiles.id_usuario', '=', 'users.id')
+            ->where('postulaciones.id','=',$id)->first();
 
 
         return view('cliente.postulaciones.detallePostulacion', compact('postulacion', 'asignaciones', 'seleccionado'));
@@ -208,7 +210,6 @@ class PostulacionController extends Controller
     {
         try {
             $postulacion = Postulacion::findOrFail($request->id_postulacion);
-            Log::info($postulacion);
             $postulacion->estado = 'C';
             $postulacion->id_postulante_seleccionado = $request->id_profesionista;
             $postulacion->update();
