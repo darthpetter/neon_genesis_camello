@@ -9,10 +9,8 @@
             <div>
                 <h1 class="text-guayaquil-600 text-3xl font-medium">Camellaya</h1>
             </div>
-            <div class="grid grid-cols-4 place-items-center">
-                <a class="{{ $link_style }}" href="#welcome">Inicio</a>
+            <div class="grid grid-cols-1 md:grid-cols-4 md:place-items-center">
                 <a class="{{ $link_style }}" href="#nosotros">Nosotros</a>
-
                 @if (Route::has('login'))
                     @auth
                         <a href="{{ url('/dashboard') }}" class="text-sm text-gray-700 dark:text-gray-500 underline">Dashboard</a>
