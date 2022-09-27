@@ -1,9 +1,12 @@
+@php
+    $params=$_GET;
+@endphp
 <x-app-layout>
-    <div class="bg-guayaquil-600 dark:bg-neutral-800 min-h-screen p-5 md:p-10">
-        <div class="grid grid-cols-1 md:gap-4 gap-2 px-10">
+    <div class="bg-guayaquil-600 dark:bg-neutral-800 min-h-screen p-2 md:p-10">
+        <div class="grid grid-cols-1 md:gap-4 gap-2 p-5">
             <form action="{{ route('postulaciones') }}">
                 <div class="grid grid-cols-5 gap-3">
-                    <div class="col-span-4 grid grid-cols-4 gap-3">
+                    <div class="col-span-4 grid grid-cols-2 md:grid-cols-4 gap-3">
                         @foreach ($areas_labor as $area) 
                             <div class="border border-neutral-500 rounded-md px-4 py-2">
                                 <input name="{{ __($area->id) }}"  type="checkbox" class="p-2 rounded-md focus:bg-guayaquil-500 inline-block pr-3"

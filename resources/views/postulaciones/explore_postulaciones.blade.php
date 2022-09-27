@@ -1,6 +1,6 @@
 <x-app-layout>
     <div class="min-h-screen min-w-screen bg-neutral-300">
-        <div class="py-6 px-10">
+        <div class="py-6 px-2 md:px-10">
 
             <div class="bg-white rounded-md grid grid-rows-2 gap-4 p-4 my-4 shadow-sm">
                 <div class="flex items-center justify-between header-title">

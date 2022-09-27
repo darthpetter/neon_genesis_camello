@@ -160,6 +160,22 @@
             <x-jet-responsive-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
                 {{ __('Dashboard') }}
             </x-jet-responsive-nav-link>
+            @if(auth()->user()->id_rol!=1)
+                <x-jet-responsive-nav-link href="{{ route('postulaciones') }}" :active="request()->routeIs('postulaciones')">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 41 40">
+                        <path fill="currentColor" d="M20.5 0C9.46 0 .5 8.96.5 20s8.96 20 20 20 20-8.96 20-20-8.96-20-20-20Zm0 36c-8.82 0-16-7.18-16-16s7.18-16 16-16 16 7.18 16 16-7.18 16-16 16Z"/>
+                        <path fill="currentColor" d="M12.5 28a4 4 0 1 0 0-8 4 4 0 0 0 0 8Zm8-12a4 4 0 1 0 0-8 4 4 0 0 0 0 8Zm8 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z"/>
+                    </svg>
+                    {{ __('Postulaciones') }}
+                </x-jet-responsive-nav-link>
+            @endif
+            <x-jet-responsive-nav-link href="{{ route('estadisticas') }}" :active="request()->routeIs('estadisticas')">
+                <svg  class="h-6 w-6" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M23 14.5C22.7596 14.5017 22.5214 14.5468 22.297 14.633L19.899 12.67C19.958 12.456 20 12.234 20 12C20 10.614 18.886 9.5 17.5 9.5C16.114 9.5 15 10.614 15 12C15 12.396 15.1 12.765 15.262 13.097L12.353 16.535C12.2366 16.5132 12.1185 16.5015 12 16.5C11.821 16.5 11.652 16.53 11.488 16.574L8.925 14.011C8.97 13.848 9 13.679 9 13.5C9 12.392 8.108 11.5 7 11.5C5.892 11.5 5 12.392 5 13.5C5 14.608 5.892 15.5 7 15.5C7.179 15.5 7.348 15.47 7.512 15.426L10.075 17.989C10.0269 18.1551 10.0017 18.3271 10 18.5C10 19.608 10.892 20.5 12 20.5C13.108 20.5 14 19.608 14 18.5C14 18.263 13.952 18.04 13.877 17.829L16.79 14.387C17.017 14.453 17.252 14.5 17.5 14.5C17.8946 14.4978 18.2831 14.4015 18.633 14.219L21.032 16.182C21.0132 16.287 21.0025 16.3933 21 16.5C21 17.608 21.892 18.5 23 18.5C24.108 18.5 25 17.608 25 16.5C25 15.392 24.108 14.5 23 14.5Z" fill="currentColor"/>
+                    <rect x="1.25" y="1.25" width="27.5" height="27.5" rx="13.75" stroke="currentColor" stroke-width="2.5"/>
+                </svg>
+                <span>{{ __('Reportería') }}</span>
+            </x-jet-responsive-nav-link>
         </div>
 
         <!-- Responsive Settings Options -->
